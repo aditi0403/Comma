@@ -1,0 +1,164 @@
+<%- include('partials/header') -%>
+<link rel="stylesheet" href="/styles/bento.css">
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>New Post</title>
+  <style>
+    body {
+      background-color: #222;
+      color: white;
+    }
+    .bento-outer {
+      padding: 2rem;
+    }
+    .bento-box {
+      background-color: #333;
+      padding: 2rem;
+      border-radius: 1.25rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .bento-input {
+      background-color: #444;
+      border: 1px solid #555;
+      color: white;
+      padding: 0.75rem 1rem;
+      border-radius: 0.75rem;
+      font-size: 1rem;
+    }
+    .bento-input:focus {
+      outline: none;
+      border-color: #666;
+      box-shadow: 0 0 0 0.2rem rgba(102, 102, 102, 0.25);
+    }
+    .bento-input::placeholder {
+      color: #bbb;
+    }
+    .profile-meta {
+      color: #ccc;
+    }
+    .bento-btn {
+      background-color: white;
+      color: black;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 1rem;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .bento-btn:hover {
+      background-color: #eee;
+      transform: translateY(-2px);
+    }
+    #preview img {
+        height: 60px;
+        width: auto;
+        object-fit: cover;
+        border-radius: 0.5rem;
+        margin-right: 0.5rem;
+        border: 1px solid #555;
+    }
+    .alert {
+        padding: 0.75rem 1.25rem;
+        margin-bottom: 1rem;
+        border: 1px solid transparent;
+        border-radius: 0.25rem;
+    }
+    .alert-success {
+        color: #155724;
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+    }
+    .alert-danger {
+        color: #721c24;
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+    }
+  </style>
+</head>
+<body>
+  <div class="bento-outer">
+    <div class="bento-box" style="width: 800px; max-width: 90%; margin: auto;"> <h2 class="bento-title" style="text-align: center; margin-bottom: 1.5rem;">Create a New Post</h2>
+
+      <% if (typeof success !== 'undefined' && success) { %>
+        <div class="alert alert-success" style="margin-bottom: 1rem;">
+          <strong>Success!</strong> <%= success %>
+        </div>
+      <% } %>
+
+      <% if (typeof error !== 'undefined' && error) { %>
+        <div class="alert alert-danger" style="margin-bottom: 1rem;">
+          <strong>Error!</strong> <%= error %>
+        </div>
+      <% } %>
+
+      <form action="/posts/add" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()" class="d-flex flex-column gap-3">
+        <input id="title" name="title" type="text" placeholder="Post Title" class="bento-input" />
+
+        <textarea id="content" name="content" placeholder="What's on your mind?" rows="4" class="bento-input"></textarea>
+
+        <label for="images" class="profile-meta" style="margin-top: 0.5rem;">Upload Images (Max 5)</label>
+        <input type="file" id="images" name="images" multiple accept="image/jpeg, image/png, image/gif, image/webp" class="bento-input" onchange="previewImages(this)" />
+
+        <div id="preview" class="d-flex gap-2 flex-wrap mt-2"></div>
+
+        <button type="submit" class="bento-btn" style="margin-top: 1rem;">Create Post</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function previewImages(input) {
+      const preview = document.getElementById('preview');
+      preview.innerHTML = '';
+
+      const files = input.files; 
+
+      if (files.length > 5) {
+        alert('You can only select up to 5 images.');
+        input.value = '';
+        return;
+      }
+
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        if (file.type.startsWith('image/')) {
+          const img = document.createElement('img');
+          img.src = URL.createObjectURL(file);
+          img.classList.add('rounded');
+          img.style.height = '60px';
+          img.style.objectFit = 'cover';
+          img.onload = () => URL.revokeObjectURL(img.src);
+          preview.appendChild(img);
+        } else {
+            alert(`File "${file.name}" is not an image and will be ignored.`);
+        }
+      }
+    }
+
+    function validateForm() {
+      const title = document.getElementById('title').value.trim();
+      const content = document.getElementById('content').value.trim();
+      const images = document.getElementById('images').files; 
+
+      if (title === '' || content === '') {
+        alert('Title and Content cannot be empty.');
+        return false; 
+      }
+
+      if (images.length > 5) {
+        alert('You can only upload up to 5 images. Please remove extra images.');
+        return false; 
+      }
+
+      return true; 
+    }
+  </script>
+</body>
+</html>
+
+<%- include('partials/footer') -%>

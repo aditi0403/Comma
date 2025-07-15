@@ -1,0 +1,78 @@
+<%- include('partials/header', { title: "Register" }) -%>
+<link rel="stylesheet" href="/styles/bento.css">
+
+<div class="bento-outer">
+  <div class="auth-container">
+    <div class="bento-box auth-box" style="width: 400px; max-width: 90vw;">
+      <div class="auth-header">
+        <h1 class="bento-title">Register</h1>
+        <p class="bento-meta">Create your account to get started</p>
+      </div>
+
+      <% if (error) { %>
+        <div class="error-message">
+          <p><%= error %></p>
+        </div>
+      <% } %>
+
+      <form class="auth-form" action="/auth/register" method="POST">
+        <div class="form-group">
+          <label for="username" class="form-label">Username</label>
+          <input 
+            class="bento-input"
+            type="text" 
+            id="username"
+            name="username" 
+            placeholder="Username" 
+            required 
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="email" class="form-label">Email</label>
+          <input 
+            class="bento-input"
+            type="email" 
+            id="email"
+            name="email" 
+            placeholder="Email" 
+            required 
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="form-label">Password</label>
+          <input 
+            class="bento-input"
+            type="password" 
+            id="password"
+            name="password" 
+            placeholder="Password" 
+            required 
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword" class="form-label">Confirm Password</label>
+          <input 
+            class="bento-input"
+            type="password" 
+            id="confirmPassword"
+            name="confirmPassword" 
+            placeholder="Confirm Password" 
+            required 
+          />
+        </div>
+
+        <button class="bento-btn auth-btn" type="submit">Register</button>
+      </form>
+
+      <div class="auth-footer">
+        <p class="auth-link-text">Already have an account?</p>
+        <a href="/login" class="auth-link">Login here</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') -%>

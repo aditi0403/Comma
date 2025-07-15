@@ -1,0 +1,10 @@
+<%- include('partials/header', { title: "Error", user: user }) -%>
+
+<div class="container mt-5">
+  <h1 class="text-danger">Something went wrong</h1>
+  <p class="lead">
+    <%= error %>
+  </p>
+</div>
+
+<%- include('partials/footer') -%>

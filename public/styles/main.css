@@ -1,0 +1,25 @@
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #c4c1c1 0%, #ffffff 50%, #666262 100%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: 'Segoe UI', sans-serif;
+  color: #222;
+  margin: 0;
+  padding: 0;
+}
+
+body.home-page {
+  background: url('https://i.pinimg.com/736x/f3/01/b7/f301b78642349b752d88b318081a6570.jpg') center center / cover no-repeat fixed;
+  position: relative;
+}
+
+body.home-page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4); 
+  z-index: -1;
+}

@@ -1,0 +1,49 @@
+<%- include('partials/header', { title: "Edit Post", user }) -%>
+<link rel="stylesheet" href="/styles/bento.css">
+
+<div class="bento-outer">
+  <form action="/posts/<%= post._id %>?_method=PUT" method="POST" enctype="multipart/form-data" class="bento-left">
+    <div class="bento-box">
+      <label for="title" class="bento-title">Edit Title</label>
+      <input type="text" id="title" name="title" value="<%= post.title %>" required
+        style="width: 100%; margin-top: 0.5rem; padding: 0.8rem 1rem; border-radius: 1rem; border: none; font-size: 1.1rem;">
+    </div>
+
+    <div class="bento-box">
+      <label for="content" class="bento-title">Edit Content</label>
+      <textarea id="content" name="content" rows="8" required
+        style="width: 100%; margin-top: 0.5rem; padding: 1rem; border-radius: 1rem; border: none; font-size: 1rem; resize: vertical;"><%= post.content %></textarea>
+    </div>
+
+    <div class="bento-box">
+      <label class="bento-title">Upload New Images (Max 5)</label>
+      <input type="file" name="images" multiple accept="image/*"
+        style="margin-top: 0.5rem; background: rgba(255,255,255,0.07); padding: 0.7rem 1rem; border-radius: 1rem; border: none; color: white;">
+    </div>
+
+    <div class="btn-group">
+      <button type="submit" class="bento-btn">Save Changes</button>
+      <a href="/posts/<%= post._id %>" class="bento-btn">Cancel</a>
+    </div>
+  </form>
+
+  <div class="bento-right">
+    <% if (post.images && post.images.length > 0) { %>
+      <% post.images.forEach((image, idx) => { %>
+        <div class="bento-box">
+          <img src="<%= image.url %>" alt="Post Image <%= idx + 1 %>" class="bento-image">
+          <div style="margin-top: 0.5rem;">
+            <label>
+              <input type="checkbox" name="deleteImages[]" value="<%= image.filename %>">
+              Delete Image
+            </label>
+          </div>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <div class="bento-box" style="text-align: center;">No images to display.</div>
+    <% } %>
+  </div>
+</div>
+
+<%- include('partials/footer') -%>

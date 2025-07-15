@@ -1,0 +1,30 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Environment variables
+.env
+.env.*
+
+# Logs
+logs/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build output
+/dist
+/build
+
+# VS Code
+.vscode/
+
+# Others
+coverage/
+
+# Optional: ignore uploads if you store them locally
+public/images/uploads/

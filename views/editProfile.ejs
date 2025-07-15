@@ -1,0 +1,74 @@
+<%- include('partials/header', { title: "Edit Profile", user }) %>
+<link rel="stylesheet" href="/styles/bento.css">
+
+<div class="bento-outer">
+  <div class="bento-box auth-box">
+    <div class="auth-header">
+      <h1 class="bento-title">Edit Profile</h1>
+      <p class="bento-meta">Update your profile information</p>
+    </div>
+
+    <% if (error) { %>
+      <div class="error-message"><p><%= error %></p></div>
+    <% } %>
+    <% if (success) { %>
+      <div class="success-message"><p><%= success %></p></div>
+    <% } %>
+
+    <form action="/user/edit" method="POST" enctype="multipart/form-data" class="auth-form">
+      <div class="form-group">
+        <label for="username" class="form-label">Username</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          class="bento-input"
+          value="<%= user.username %>"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="pronouns" class="form-label">Pronouns</label>
+        <input
+          type="text"
+          id="pronouns"
+          name="pronouns"
+          class="bento-input"
+          value="<%= user.pronouns || '' %>"
+          placeholder="e.g. she/her, they/them"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="bio" class="form-label">Bio</label>
+        <textarea
+          id="bio"
+          name="bio"
+          class="bento-input"
+          rows="3"
+          placeholder="Tell us something about you..."
+        ><%= user.bio || '' %></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="profilePicture" class="form-label">Profile Picture</label>
+        <input
+          type="file"
+          id="profilePicture"
+          name="profilePicture"
+          class="bento-input"
+          accept="image/*"
+        />
+      </div>
+
+      <button type="submit" class="bento-btn auth-btn">Update Profile</button>
+    </form>
+
+    <div class="auth-footer">
+      <a href="/profile" class="auth-link">← Back to Profile</a>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

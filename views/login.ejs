@@ -1,0 +1,62 @@
+<%- include('partials/header', { title: "Login" }) -%>
+<link rel="stylesheet" href="/styles/bento.css">
+
+<div class="bento-outer">
+  <div class="auth-container">
+    <div class="bento-box auth-box" style="width: 400px; max-width: 90vw;">
+      <div class="auth-header">
+        <h1 class="bento-title">Login</h1>
+        <p class="bento-meta">Access your account securely</p>
+      </div>
+
+      <% if (error) { %>
+        <div class="error-message">
+          <p><%= error %></p>
+        </div>
+      <% } %>
+
+      <form action="/auth/login" method="POST" class="auth-form">
+        <div class="form-group">
+          <label for="email" class="form-label">Email</label>
+          <input
+            type="text"
+            id="email"
+            name="email"
+            class="bento-input"
+            placeholder="Enter your email"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="bento-input"
+            placeholder="Enter your password"
+            required
+          />
+        </div>
+
+        <div class="form-options">
+          <label class="checkbox-container">
+            <input type="checkbox" name="remember" class="checkbox-input">
+            <span class="checkbox-label">Remember me</span>
+          </label>
+          <a href="/ class="forgot-link">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="bento-btn auth-btn">Login</button>
+      </form>
+
+      <div class="auth-footer">
+        <p class="auth-link-text">Don’t have an account?</p>
+        <a href="/register" class="auth-link">Create one here</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') -%>

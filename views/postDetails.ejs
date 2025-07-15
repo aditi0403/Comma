@@ -1,0 +1,74 @@
+<%- include('partials/header', { title, user: user }) -%>
+<link rel="stylesheet" href="/styles/bento.css">
+
+<div class="bento-outer">
+  <div class="bento-left">
+    <div class="bento-box">
+      <div class="bento-title"><%= post?.title %></div>
+      <div class="bento-meta">By <%= post.author.username %> | <%= post.createdAt.toDateString() %></div>
+    </div>
+
+    <div class="bento-box">
+      <div class="bento-content"><%= post?.content %></div>
+    </div>
+  </div>
+
+  <div class="bento-right">
+    <% if (user?._id?.toString() === post?.author?._id?.toString()) { %>
+      <div class="btn-group">
+        <a href="/posts/<%= post._id %>/edit" class="bento-btn">Edit</a>
+        <form action="/posts/<%= post._id %>?_method=DELETE" method="POST">
+          <button type="submit" class="bento-btn">Delete</button>
+        </form>
+      </div>
+    <% } %>
+
+    <% post?.images?.forEach((image) => { %>
+      <div class="bento-box">
+        <img src="<%= image.url %>" alt="Post Image" class="bento-image">
+      </div>
+    <% }) %>
+  </div>
+
+  <div class="bento-comment-section">
+    <div class="bento-comments-left">
+      <% if (post?.comments?.length > 0) { %>
+        <% post.comments.forEach(comment => { %>
+          <div class="comment-card">
+            <div class="bento-left">
+              <div class="comment-author"><%= comment?.author?.username %></div>
+              <div class="comment-content"><%= comment?.content %></div>
+            </div>
+            <div class="bento-right">
+              <% if (user?._id?.toString() === post?.author?._id?.toString()) { %>
+              <div class="btn-group">
+                <form action="/comments/<%= comment._id %>?_method=DELETE" method="POST">
+                  <button type="submit" class="bento-btn comment-delete">Del</button>
+                </form>
+              </div>
+            <% } %>
+            </div>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <div style="grid-column: 1/-1; display: flex; align-items: center; justify-content: center; opacity: 0.7;">
+          <p>No comments yet.</p>
+        </div>
+      <% } %>
+    </div>
+
+    <div class="bento-comment-form-right">
+      <% if (user) { %>
+        <h5>Leave a Comment</h5>
+        <form action="/posts/<%= post._id %>/comments" method="POST" class="comment-form">
+          <textarea name="content" rows="2" placeholder="Your comment..." required></textarea>
+          <button type="submit">Submit</button>
+        </form>
+      <% } else { %>
+        <p>Please <a href="/auth/login">log in</a> to comment.</p>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') -%>
