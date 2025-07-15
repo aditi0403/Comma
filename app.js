@@ -47,12 +47,18 @@ app.use('/user', userRouter)
 
 app.use(errorHandler)
 
-mongoose.connect(process.env.mongo_url)
-.then(app.listen(port, () => {
-    console.log('db connected');
-    console.log(`Server is running on port ${port}`);
-}))
+mongoose.connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 20000 // 20 seconds
+})
+.then(() => {
+    app.listen(port, () => {
+        console.log('db connected');
+        console.log(`Server is running on port ${port}`);
+    });
+})
 .catch((error) => {
     console.log(error);
-})
+});
 
