@@ -22,7 +22,7 @@ app.use(session({
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: process.env.mongo_url })
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URI })
 }))
 
 passportConfig(passport);
